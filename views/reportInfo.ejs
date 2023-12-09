@@ -1,0 +1,56 @@
+<%- include('partials/staff-header.ejs') %>
+    
+<div class="content-view-section">
+    <!-- <div> -->
+        <!-- <form action="insertBook" method="post">
+        <button type="submit" class="btn insertRecord btn-lg">Insert new record</button>
+        </form>
+    </div> -->
+  <div class="search-section">
+    <form action="/searchReport" method="post">
+      <label for="">Reg-no: </label>
+      <input type="text" placeholder="Reg No" class="search-content" name="reg_no">
+      <label for="">Book-title: </label>
+      <input type="text" placeholder="Book Name" class="search-content" name="bookName">
+      <label for="">Reader: </label>
+      <input type="text" placeholder="Reader Name" class="search-content" name="readName">
+      <button type="submit" class="btn btn-warning " class="search-conent-btn">Search</button>
+    </form>
+
+
+  </div>
+
+    <div class="content-box reader-content" >
+       
+        <table >
+            <% if(locals.repData!=""){ %>
+                <tr>
+                    <th>Reg-no</th>
+                    <th>Book_title</th>
+                    <th>Reader</th>
+                    <th>Date of Borrow</th>
+                    <th>Action</th>
+                </tr>
+            <% repData.forEach(data => { %> 
+              <tr>
+                <td><%= data.reg_no %></td>
+                <td><%=data.book_title %></td>
+                <td><%=data.reader_name %></td>
+                <td><%=data.dateofborrow %></td>
+                <td>
+                    <form action="/deleteReport" method="post"  style="display: inline-block;">
+                    <button type="submit" class="btn btn-success" name="deleteReport" value="<%= data.reg_no %>">delete</button>
+                    </form>
+                </td>
+              </tr>
+            <%})%>               
+            <% }else{ %>
+              <h2 style="text-align: center;">No reports remianed</h2>
+            <% } %>
+        </table>
+   
+    </div>
+    </div>
+    
+
+<%- include('partials/home-footer.ejs') %>

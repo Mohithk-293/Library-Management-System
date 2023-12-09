@@ -1,0 +1,14 @@
+<%- include('partials/staff-header.ejs') %>
+<div class="delete-staff-account">
+    <div class="delete-profile-box">
+        <form action="/delete-Account" method="post">
+        <p class="labelForDeleteStaffAccount">Enter password</p>
+        <input type="password" name="checkPwd" class="staffDelete">
+        <% if(locals.error){ %>
+            <p class="wrong-pwd"><%=error%></p>
+        <% } %>
+        <button type="submit" class="btn btn-warning deleteStaff-btn">Delete Account</button>
+        </form>
+    </div>   
+</div>
+<%- include('partials/home-footer.ejs') %>

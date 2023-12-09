@@ -1,0 +1,27 @@
+<%- include('partials/home-header.ejs') %>
+   
+      <div class="body-section">
+        <div class="user-login-section">
+            <h3 style="line-height: 1.5;">Author Registration</h3>
+            <form action="/authorRegister" method="post">
+                <p class="label" for="userName">Name</p>
+                <input type="text" name="authorName">
+                <p class="label" for="userEmail">Email-id</p>
+                <input type="email" name="authorEmail">
+                <p class="label" for="userPhone">Phone</p>
+                <input type="text" name="authorPhone">
+                <p class="label" for="password">Create Password</p>
+                <input type="password" name="createPassword">
+                <p class="label" for="password">Confirm Password</p>
+                <input type="password" name="confirmPassword">
+                <% if(locals.passwordErr){ %>
+                  <p class="wrong-adminCode-msg"><%=passwordErr%></p>
+                <% } %>
+                <a href="/authorLogin" class="login-link">Already registered ?</a>
+                <button type="submit" class="btn btn-warning register-btn">Register</button>
+            </form>
+
+        </div>
+      </div>
+      
+<%- include('partials/home-footer.ejs') %>

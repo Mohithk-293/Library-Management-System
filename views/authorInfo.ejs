@@ -1,0 +1,49 @@
+<%- include('partials/staff-header.ejs') %>
+    
+<div class="content-view-section">
+  <div class="search-section">
+    <form action="/searchAuthor" method="post">
+      <label for="">Author-id: </label>
+      <input type="text" placeholder="Author id" class="search-content" name="authId">
+      <label for="">Author-Name: </label>
+      <input type="text" placeholder="Author Name" class="search-content" name="authName">
+      <button type="submit" class="btn btn-warning " class="search-conent-btn">Search</button>
+    </form>
+
+
+  </div>
+
+    <div class="content-box " >
+       
+        <table >
+            <% if(locals.authData!=""){ %>
+                <tr>
+                    <th>Author-id</th>
+                    <th>Author-Name</th>
+                    <th>Phone</th>
+                    <th>Email-id</th>
+                    <th>Action</th>
+                </tr>
+            <%authData.forEach(data => { %> 
+              <tr>
+                <td><%= data.auth_id %></td>
+                <td><%=data.auth_name %></td>
+                <td><%=data.phone %></td>
+                <td><%=data.email %></td>
+                <td>
+                    <form action="/deleteAuthor" method="post"  style="display: inline-block;">
+                    <button type="submit" class="btn btn-success" name="deleteAuthor" value="<%= data.auth_id %>">delete</button>
+                    </form>
+                </td>
+              </tr>
+            <%})%>               
+            <% }else{ %>
+              <h2 style="text-align: center;">No records found</h2>
+            <% } %>
+        </table>
+   
+    </div>
+    </div>
+    
+
+<%- include('partials/home-footer.ejs') %>

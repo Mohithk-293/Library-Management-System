@@ -1,0 +1,16 @@
+<%- include('partials/staff-header.ejs') %>
+<div class="insert-record-section">
+<div class=" insert-box" >
+    <form action="/insertNewBook" method="post">
+    <h2 class="insert-record-header">Insert Book</h2>
+    <p class="labelForinsert">Book-Name</p>
+    <input type="text" name="bookName" class="insertNew">
+    <p class="labelForinsert">Price </p>
+    <input type="text" name="bookPrice"class="insertNew" >
+    <p class="labelForinsert">Author-id </p>
+    <input type="text" name="bookAuthor" class="insertNew"><br>
+    <button type="submit" class="btn btn-warning insert-btn">Insert</button>
+    </form>
+ </div>   
+ </div>
+<%- include('partials/home-footer.ejs') %>

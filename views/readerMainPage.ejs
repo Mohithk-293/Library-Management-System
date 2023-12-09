@@ -1,0 +1,60 @@
+<%- include('partials/reader-header.ejs') %>
+<div class="content-view-section" style="padding: 200px 200px;">
+<div class="row profile-box">
+    <div class="col-lg-6">
+        <div class="availableBooksContent" >
+            <h4 style="text-align: center;">Books Available</h4><br>
+            <table >
+                <% if(locals.userBookData!=""){ %>
+                    <tr>
+                        <th>Book_title</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </tr>
+                <% userBookData.forEach(data => { %> 
+                  <tr>
+                    <td><%=data.title %></td>
+                    <td><%=data.price %></td>
+                    <td>
+                        <form action="/requestBook" method="post" style="display: inline-block;">
+                            <button type="submit" class="btn btn-warning" name="requestBook" value="<%= data.book_id %>">Request</button>&nbsp;
+                        </form>
+                    </td>
+                  </tr>
+                <%})%>               
+                <% }else{ %>
+                  <h4 style="text-align: center;margin-top:70px;">No Books Available</h4>
+                <% } %>
+            </table>
+         </div>  
+    </div>
+
+   <div class="col-lg-6 author-publication-details">
+    <h4 style="text-align: center; ">Borrowed books</h4><br>
+    <table >
+        <% if(locals.issuedBooksData!=""){ %>
+            <tr>
+                <th>Book_title</th>
+                <th>Action</th>
+            </tr>
+        <% issuedBooksData.forEach(data => { %> 
+          <tr>
+            <td><%=data.book_title %></td>
+            <td>
+                <form action="/returnBook" method="post" style="display: inline-block;">
+                    <button type="submit" class="btn btn-success" name="returntBook" value="<%= data.book_id %>">Return</button>&nbsp;
+                </form>
+            </td>
+          </tr>
+        <%})%>               
+        <% }else{ %>
+          <h4 style="text-align: center;margin-top:70px;">All books are returned</h4>
+        <% } %>
+    </table>
+    </div>
+
+</div>
+</div>
+
+
+<%- include('partials/home-footer.ejs') %>

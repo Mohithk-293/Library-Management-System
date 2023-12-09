@@ -1,0 +1,71 @@
+<%- include('partials/staff-header.ejs') %>
+<div class="cards-section row">
+      <div class="card col-lg-4">
+        <h5 class="card-header" >Registered Users</h5>
+        <div class="card-body">
+          <p class="card-text">Number of Users: </p>
+          <h2 class=""><%=readerCount%></h2>
+        </div>
+        <div class="card-footer text-muted">
+          <form action="/userInfo" method="post">
+            <a  class="arrow  " onclick="this.parentNode.submit();">More info &nbsp;<i class="fa-solid fa-circle-arrow-right" ></i></a>
+          </form>
+        </div>
+      </div>
+
+      <div class="card col-lg-4">
+        <h5 class="card-header">Books</h5>
+        <div class="card-body">
+          <p class="card-text">Number of books: </p>
+          <h2 class=""><%=bookCount%></h2>
+        </div>
+        <div class="card-footer text-muted">
+          <form action="/bookInfo" method="post">
+            <a  class="arrow" onclick="this.parentNode.submit();">More info &nbsp;<i class="fa-solid fa-circle-arrow-right"></i></a>
+          </form>
+        </div>
+      </div>
+
+      <div class="card col-lg-4">
+        <h5 class="card-header">Reports</h5>
+        <div class="card-body">
+          <p class="card-text">Total number of reports:</p>
+          <h2 class=""><%=reportCount%></h2>
+        </div>
+        <div class="card-footer text-muted">
+          <form action="/reportInfo" method="post">
+            <a  class="arrow" onclick="this.parentNode.submit();">More info &nbsp;<i class="fa-solid fa-circle-arrow-right" ></i></a>
+          </form>
+        </div>
+      </div>
+
+      <div class="card col-lg-4">
+        <h5 class="card-header">Authors</h5>
+        <div class="card-body">
+          <p class="card-text">Number of authors: </p>
+          <h2 class=""><%=authorCount%></h2>
+          
+        </div>
+        <div class="card-footer text-muted">
+          <form action="/authorInfo" method="post">
+            <a  class="arrow" onclick="this.parentNode.submit();">More info &nbsp;<i class="fa-solid fa-circle-arrow-right" ></i></a>
+          </form>
+        </div>
+      </div>
+
+      <div class="card col-lg-4">
+        <h5 class="card-header">Books to be issued</h5>
+        <div class="card-body">
+          <p class="card-text">Number of requests made: </p>
+          <h2><%=requestCount%></h2>
+          
+        </div>
+        <div class="card-footer">
+          <form action="/toBeIssued" method="post">
+            <a  class="arrow" onclick="this.parentNode.submit();">More info &nbsp;<i class="fa-solid fa-circle-arrow-right" ></i></a>
+          </form>
+        </div>
+      </div>
+    </div>
+
+<%- include('partials/home-footer.ejs') %>

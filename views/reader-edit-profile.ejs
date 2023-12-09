@@ -1,0 +1,18 @@
+<%- include('partials/reader-header.ejs') %>
+<div class="staff-profile-section">
+<div class="profile-box edit-box">
+    <form action="/editProfileReader" method="post">
+    <h2 class="staff-detail-header">Edit Profile</h2>
+    <p class="labelForStaffEdit">Name </p>
+    <input type="text" name="readerEditName"class="staffEdit" >
+    <p class="labelForStaffEdit">Email </p>
+    <input type="text" name="readerEditEmail"class="staffEdit" >
+    <p class="labelForStaffEdit">Phone </p>
+    <input type="text" name="readerEditPhone" class="staffEdit"><br>
+    <p class="labelForStaffEdit">Address </p>
+    <input type="text" name="readerEditAdd" class="staffEdit"><br>
+    <button type="submit" class="btn btn-warning editStaff-btn">Edit</button>
+    </form>
+ </div>   
+ </div>
+<%- include('partials/home-footer.ejs') %>

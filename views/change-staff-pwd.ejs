@@ -1,0 +1,19 @@
+<%- include('partials/staff-header.ejs') %>
+
+<div class="staff-profile-section">
+    <div class="profile-box edit-box">
+        <form action="/edit-pwd-staff" method="post">
+        <!-- <h2 class="staff-detail-header">Change Password</h2> -->
+        <p class="labelForStaffEdit">Change password</p>
+        <input type="password" name="upPwd" class="staffEdit">
+        <p class="labelForStaffEdit">Confirm password </p>
+        <input type="text" name="confirmUpPwd"class="staffEdit" >
+        <% if(locals.error){ %>
+            <p class="wrong-pwd"><%=error%></p>
+        <% } %>
+        <button type="submit" class="btn btn-warning editStaff-btn">Save</button>
+        </form>
+    </div>   
+</div>
+
+<%- include('partials/home-footer.ejs') %>

@@ -1,0 +1,16 @@
+<%- include('partials/staff-header.ejs') %>
+<div class="staff-profile-section">
+<div class="profile-box edit-box">
+    <form action="/updateBook" method="post">
+    <h2 class="staff-detail-header">Edit Book</h2>
+    <p class="labelForBookEdit">Book-Title </p>
+    <input type="text" name="bookEditName"class="bookEdit" >
+    <p class="labelForBookEdit">Price </p>
+    <input type="text" name="bookEditPrice" class="bookEdit">
+    <p class="labelForBookEdit">Author-id</p>
+    <input type="text" name="bookAuthorId" class="bookEdit"><br>
+    <button type="submit" class="btn btn-warning editBook-btn">Edit</button>
+    </form>
+ </div>   
+ </div>
+<%- include('partials/home-footer.ejs') %>

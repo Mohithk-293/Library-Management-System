@@ -1,0 +1,56 @@
+body{
+    padding:0;
+    margin:0;
+}
+.navbar{
+    padding:10px 20px;
+    background-color: #4c0027df;
+    
+}
+.nav-item{
+    padding:0 10px;
+}
+.dropdown-menu{
+    background-color: #4c0027bc;
+    
+}
+.dropdown-item{
+    color:#fff;
+}
+.dropdown-item:hover{
+    color:#4c0027df;
+    
+}
+.cards-section{
+    padding: 100px 60px;
+    background-image: url('/images/library-image.jpg');
+    margin:0;
+}
+.card{
+    width:25rem;
+    margin:40px 25px;
+    padding: 0 50px;
+    border-radius: 10px;
+    background-color: #4c0027c7;
+    color:#fff;
+}
+
+.card-body{
+   
+    padding:30px;
+}
+.arrow{
+    text-decoration: none;
+    color:yellow;
+}
+.card-footer{
+    
+    text-align: center;
+}
+
+footer{
+    padding:30px 0;
+    text-align: center;
+    background-color: #4c0027df;
+    color: #fff;
+}

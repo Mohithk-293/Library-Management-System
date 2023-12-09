@@ -1,0 +1,74 @@
+<%- include('partials/staff-header.ejs') %>
+<% if(locals.triggerMsg){ %>
+  <div id="trigger-msg">
+    <h4 ><%=triggerMsg %></h4>
+  </div>
+  <% } %>
+    
+<div class="content-view-section">
+ 
+    <div>
+        <form action="insertBook" method="post">
+        <button type="submit" class="btn insertRecord btn-lg">Insert new record</button>
+        </form>
+    </div>
+  <div class="search-section">
+    <form action="/searchBook" method="post">
+      <label for="">Book-id: </label>
+      <input type="text" placeholder="Book id" class="search-content" name="bookId">
+      <label for="">Title: </label>
+      <input type="text" placeholder="Book Name" class="search-content" name="bookName">
+      <label for="">Author-Name: </label>
+      <input type="text" placeholder="Author Name" class="search-content" name="authName">
+      <button type="submit" class="btn btn-warning " class="search-conent-btn">Search</button>
+    </form>
+
+
+  </div>
+
+    <div class="content-box reader-content" >
+       
+        <table >
+            <% if(locals.bookData!=""){ %>
+                <tr>
+                    <th>Book_id</th>
+                    <th>Book_title</th>
+                    <th>Price</th>
+                    <th>Author_Id</th>
+                    <th>Action</th>
+                </tr>
+            <% bookData.forEach(data => { %> 
+              <tr>
+                <td><%= data.book_id %></td>
+                <td><%=data.title %></td>
+                <td><%=data.price %></td>
+                <td><%=data.auth_id %></td>
+                <td>
+                    <form action="/editBook" method="post" style="display: inline-block;">
+                    <button type="submit" class="btn btn-warning" name="editBook" value="<%= data.book_id %>">Edit</button>&nbsp;
+                    </form>
+                    <form action="/deleteBook" method="post"  style="display: inline-block;">
+                    <button type="submit" class="btn btn-success" name="deleteBook" value="<%= data.book_id %>">delete</button>
+                    </form>
+                </td>
+              </tr>
+            <%})%>               
+            <% }else{ %>
+              <h2 style="text-align: center;">No records found</h2>
+            <% } %>
+        </table>
+        
+   
+    </div>
+    </div>
+
+    <script>
+       setTimeout(function() {
+      $("#trigger-msg").remove();
+    }, 2000);
+    </script>
+   
+  
+  
+
+<%- include('partials/home-footer.ejs') %>

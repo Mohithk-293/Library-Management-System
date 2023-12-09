@@ -1,0 +1,60 @@
+body{
+    padding:0;
+    margin:0;
+}
+.navbar{
+    padding:10px 20px;
+    background-color: #4c0027df;
+}
+.nav-item{
+    padding:0 20px;
+}
+.body-section{
+    background-image: url('/images/library-image.jpg');
+    padding:200px 500px; 
+        
+}
+.staff-login-section,.user-login-section{
+    background-color: #4c0027c7;
+    padding:50px 120px ; 
+    color: #fff;
+    box-shadow:0 4px 8px 0 rgb(0,0,0,0.5),0 6px 20px 0 rgb(0,0,0,0.2);
+    border-radius: 1rem;
+    text-align: center; 
+}
+h3{
+    margin-bottom:40px;
+    text-align: center;
+}
+.label{
+    margin-bottom:10px;
+    text-align:left
+
+}
+input{
+    padding:10px 30px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    width:100%;
+}
+.login-btn,.register-btn{
+    width:100%;
+    margin: 20px 0
+}
+.wrong-pwd-msg,.rong-useremail-msg,.wrong-adminCode-msg{
+    margin:10px 0;
+    color:#fff;
+}
+.register-link,.login-link{
+    color:white;
+    text-decoration: none;   
+}
+.register-link:hover,.login-link:hover{
+    color:yellow;
+}
+footer{
+    padding:30px 0;
+    text-align: center;
+    background-color: #4c0027df;
+    color: #fff;
+}

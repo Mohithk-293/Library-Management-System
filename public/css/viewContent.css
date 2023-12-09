@@ -1,0 +1,68 @@
+.content-view-section{
+    background-image: url('/images/library-image.jpg');
+    padding:130px 200px; 
+}
+.search-section{
+    background-color: #4c0027c7;
+    padding:40px 60px ; 
+    margin-bottom:30px;
+    /* text-align: center; */
+    color: #fff;
+    box-shadow:0 4px 8px 0 rgb(0,0,0,0.5),0 6px 20px 0 rgb(0,0,0,0.2);
+    border-radius: 1rem;
+}
+.search-content{
+padding:10px 5px;
+margin-left:5px;
+width:19%;
+margin-right: 25px;
+border-radius: 10px;
+border: none;
+
+}
+.search-conent-btn{
+    
+    width:30%;
+    margin-left: 30px;
+}
+.content-box{
+    background-color: #4c0027c7;
+    padding:70px 40px ; 
+    color: #fff;
+    box-shadow:0 4px 8px 0 rgb(0,0,0,0.5),0 6px 20px 0 rgb(0,0,0,0.2);
+    border-radius: 1rem;
+    font-size: 18px;
+}
+.reader-content{
+    width:90%;
+    margin: 0 auto;
+}
+th,tr,td{
+    padding:10px 30px;
+    text-align: center;
+}
+table,tr{
+    /* border: 1px solid #fff; */
+    border-collapse: collapse;
+    /* background-color: #4c00276c; */
+    color: #fff;
+    
+}
+.insertRecord{
+    margin-bottom:10px;
+    margin-left: 10px;
+     background-color:#B31312;
+     color:#fff;
+}
+.author-publication-details{
+    padding:0 90px;
+    text-align: center;
+    
+}
+#trigger-msg,#trigger-msg-author{
+    padding:10px 0;
+    text-align: center;
+    background-color: #9FBB73;
+    color:#455c32;
+    border:1px solid #455c32;
+}

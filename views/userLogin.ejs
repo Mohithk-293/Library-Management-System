@@ -1,0 +1,23 @@
+<%- include('partials/home-header.ejs') %>
+      <div class="body-section">
+        <div class="user-login-section">
+            <h3>Reader login</h3>
+            <form action="/ReaderLogin" method="post">
+                <p class="label" for="userEmail">Email-id</p>
+                <input type="email" name="userEmail">
+                <% if(locals.mailError){ %>
+                  <p class="wrong-useremail-msg"><%=mailError%></p>
+                  <% } %>
+                <p class="label" for="password">Password</p>
+                <input type="password" name="password">
+                <% if(locals.pwdError){ %>
+                <p class="wrong-pwd-msg"><%=pwdError%></p>
+                <% } %>
+                <a href="/user-register" class="register-link">New Reader? Register</a>
+                <button type="submit" class="btn btn-warning login-btn">login</button>
+            </form>
+        </div>
+      </div>
+      
+
+<%- include('partials/home-footer.ejs') %>

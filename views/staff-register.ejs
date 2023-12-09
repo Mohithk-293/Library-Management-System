@@ -1,0 +1,25 @@
+<%- include('partials/home-header.ejs') %>
+   
+      <div class="body-section">
+        <div class="staff-login-section">
+            <h3>New Staff</h3>
+            <form action="/staffRegister" method="post">
+                <p class="label" for="userName">Name</p>
+                <input type="text" name="userName">
+                <p class="label" for="userEmail">Email-id</p>
+                <input type="email" name="userEmail">
+                <p class="label" for="password">Create Password</p>
+                <input type="password" name="password">
+                <p class="label" for="password">Admin code</p>
+                <input type="password" name="adminCode">
+                <% if(locals.adminCodeErr){ %>
+                  <p class="wrong-adminCode-msg"><%=adminCodeErr%></p>
+                <% } %>
+                <a href="/" class="login-link">Already registered ?</a>
+                <button type="submit" class="btn btn-warning register-btn">Register</button>
+            </form>
+
+        </div>
+      </div>
+      
+<%- include('partials/home-footer.ejs') %>

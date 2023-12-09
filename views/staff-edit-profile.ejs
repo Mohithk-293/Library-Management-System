@@ -1,0 +1,16 @@
+<%- include('partials/staff-header.ejs') %>
+<div class="staff-profile-section">
+<div class="profile-box edit-box">
+    <form action="/editProfileStaff" method="post">
+    <h2 class="staff-detail-header">Edit Profile</h2>
+    <p class="labelForStaffEdit">Staff-id</p>
+    <input type="text" name="staffEditId" class="staffEdit">
+    <p class="labelForStaffEdit">Name </p>
+    <input type="text" name="staffEditName"class="staffEdit" >
+    <p class="labelForStaffEdit">Email-id </p>
+    <input type="text" name="staffEditEmail" class="staffEdit"><br>
+    <button type="submit" class="btn btn-warning editStaff-btn">Edit</button>
+    </form>
+ </div>   
+ </div>
+<%- include('partials/home-footer.ejs') %>
