@@ -188,18 +188,6 @@ app.get('/staff-register',(req,res)=>{
     res.render('staff-register.ejs')
 });
 
-// Reader
-
-app.get('/userLogin',async(req,res)=>{
-    res.render('userLogin.ejs')
-
-})
-
-app.get('/user-register',async(req,res)=>{
-    await db.query("delete from logs")
-    res.render('userRegister.ejs')
-})
-
 app.post('/staffRegister',async(req,res)=>{
     const userName=req.body.userName;
     const userEmail=req.body.userEmail;
@@ -255,55 +243,7 @@ app.post('/staffRegister',async(req,res)=>{
      await loadingStaffMainPage(res);
  })
 
-
-// Author
-
-app.get('/authorLogin',(req,res)=>{
-    res.render('AuthorLogin.ejs')
-})
-
-app.get('/author-register',(req,res)=>{
-    res.render('authorRegister.ejs');
-})
-
-app.post('/author-Login',async(req,res)=>{
-    const authorEmail=req.body.authorEmail;
-    const authorpwd=req.body.password;
-    try{
-        const data=await db.query("select * from author where email=$1",
-        [authorEmail]);
-         authorLoggedIn=authorEmail;
-        if(data.rows!=""){
-            const decryptedPassword = cryptr.decrypt(data.rows[0].password);
-             if(decryptedPassword==authorpwd){
-                await loadingAuthorMainPage(res);
-             }else{
-                res.render('AuthorLogin.ejs',{
-                    pwdError:"Incorrect password"
-                });
-             }
-
-        }else{
-            res.render('staff-login.ejs',{
-                mailError:"Username is not registered"
-            });
-        }
-    }
-    catch(err){
-        console.log(err);
-    }
-})
-
-
-
-app.post('/returnToAuthorMain',async(req,res)=>{
-    await loadingAuthorMainPage(res);
-})
-app.post('/returnToReaderMain',async(req,res)=>{
-    await loadingUserMainPage(res)
-})
-
-app.post('/staffViewProfile',async(req,res)=>{
+ app.post('/staffViewProfile',async(req,res)=>{
     try{
     await viewStaffProfile(res);    
     }catch(err){
@@ -311,25 +251,6 @@ app.post('/staffViewProfile',async(req,res)=>{
     }
     
 });
-
-app.post('/authorViewProfile',async(req,res)=>{
-    try{
-    await viewAuthorProfile(res);    
-    }catch(err){
-        console.log(err)
-    }
-    
-});
-
-app.post('/readerViewProfile',async(req,res)=>{
-    try{
-    await viewReaderProfile(res);    
-    }catch(err){
-        console.log(err)
-    }
-    
-});
-
 
 app.post('/staffEditProfile',(req,res)=>{
     res.render('staff-edit-profile.ejs');
@@ -357,35 +278,6 @@ app.post('/editProfileStaff',async(req,res)=>{
     await viewStaffProfile(res);
 
 });
-
-app.post('/readerEditProfile',(req,res)=>{
-    res.render('reader-edit-profile.ejs');
-})
-
-// app.post('/editProfileReader',async(req,res)=>{
-//     const upReaderName=req.body.readerEditName;
-//     const upReaderEmail=req.body.readerEditEmail;
-//       const upReaderPhone=req.body.readerEditPhone;
-//       const upReaderAdd=req.body.readerEditAdd;
-//     if(upReaderName!="" && upReaderEmail=="" && upReaderPhone=="" && upReaderAdd=="" ){
-//         await db.query("update reader set name=$1  where email=$2",
-//         [upReaderName,readerLogedIn]);
-//     }else if(upReaderName=="" && upReaderEmail!="" && upReaderPhone=="" && upReaderAdd=="" ){
-//         await db.query("update staff set email=$1 where email=$2",
-//        [upReaderEmail,readerLogedIn]);
-//            readerLogedIn=upReaderEmail;
-//     }else if(upStaffId=="" && upStaffName=="" && upStaffEmail!=""){
-//         await db.query("update staff set email=$1 where email=$2",
-//         [upStaffEmail,staffLogedIn]);
-//         staffLogedIn=upStaffEmail;
-//     }else if(upStaffId!="" && upStaffName!="" && upStaffEmail!=""){
-//         await db.query("update staff set id=$1,name=$2,email=$3 where email=$4",
-//         [upStaffId,upStaffName,upStaffEmail,staffLogedIn]);
-//         staffLogedIn=upStaffEmail;
-//     }
-//     await viewStaffProfile(res);
-
-// });
 
 app.post('/changeStaffPwd',async(req,res)=>{
     res.render('change-staff-pwd.ejs');
@@ -426,15 +318,37 @@ app.post('/delete-Account',async(req,res)=>{
 });
 
 
-app.post('/userInfo',async(req,res)=>{
-    await displayUserInfo(res);
+// Reader
+
+app.get('/userLogin',async(req,res)=>{
+    res.render('userLogin.ejs')
+
+})
+
+app.get('/user-register',async(req,res)=>{
+    await db.query("delete from logs")
+    res.render('userRegister.ejs')
+})
+
+app.post('/returnToReaderMain',async(req,res)=>{
+    await loadingUserMainPage(res)
+})
+
+app.post('/readerViewProfile',async(req,res)=>{
+    try{
+    await viewReaderProfile(res);    
+    }catch(err){
+        console.log(err)
+    }
+    
 });
 
-app.post('/deleteAuthor',async(req,res)=>{
-    const idToDeleteAuthor=req.body.deleteAuthor;
-    db.query("delete from author where auth_id=$1",
-    [idToDeleteAuthor]);
-    await displayAuthorInfo(res);
+app.post('/readerEditProfile',(req,res)=>{
+    res.render('reader-edit-profile.ejs');
+})
+
+app.post('/userInfo',async(req,res)=>{
+    await displayUserInfo(res);
 });
 
 app.post('/deleteUser',async(req,res)=>{
@@ -482,6 +396,170 @@ app.post('/searchReader',async(req,res)=>{
 }    
 })
 
+
+app.post('/userRegister',async(req,res)=>{
+    const userName=req.body.userName;
+    const userEmail=req.body.userEmail;
+    const userPhone=req.body.userPhone;
+    const userAddress=req.body.userAddress;
+    const createPwd=req.body.createPassword;
+    const confirmpwd=req.body.confirmPassword;
+    if(createPwd==confirmpwd){
+     const encryptedPassword = cryptr.encrypt(createPwd);
+     try{
+     await db.query(`insert into reader (name,email,phone,address,password) values($1,$2,$3,$4,$5)`,
+     [userName,userEmail,userPhone,userAddress,encryptedPassword]);
+     res.redirect('/userLogin');
+     }catch(err){
+      console.log(err);
+     }
+    }else{
+     res.render('userRegister.ejs',{
+         passwordErr:"Password doesn't match"
+     });
+    }
+ });
+ 
+ app.post("/ReaderLogin",async(req,res)=>{
+    const loginEmail=req.body.userEmail;
+    const loginpwd=req.body.password;
+    try{
+        const data=await db.query("select * from reader where email=$1",
+        [loginEmail]);
+        readerLoggedIn=loginEmail;
+        if(data.rows!=""){
+            const decryptedPassword = cryptr.decrypt(data.rows[0].password);
+             if(decryptedPassword==loginpwd){
+               await loadingUserMainPage(res)
+             }else{
+                res.render('userLogin.ejs',{
+                    pwdError:"Incorrect password"
+                });
+             }
+
+        }else{
+            res.render('userLogin.ejs',{
+                mailError:"Username is not registered"
+            });
+        }
+    }
+    catch(err){
+        console.log(err);
+    }
+})
+app.post('/requestBook',async(req,res)=>{
+     const requestedBookId=req.body.requestBook;
+     try{
+     const data=await db.query("select title from book where book_id=$1",
+     [requestedBookId]);
+     const userData=await db.query("select * from reader where email=$1",
+     [readerLoggedIn]);
+     await db.query("insert into booksToBeIssued (book_id,user_id,book_title,reader_name) values ($1,$2,$3,$4)",
+     [requestedBookId,userData.rows[0].user_id,data.rows[0].title,userData.rows[0].name])
+     await loadingUserMainPage(res)
+     }catch(err){
+        console.log(err)
+     }
+
+
+})
+
+app.post('/returnBook',async(req,res)=>{
+    const bookId=req.body.returntBook;
+    try{
+    await db.query("delete from issuedBooks where book_id=$1",
+    [bookId]);
+    await loadingUserMainPage(res);
+    }catch(err){
+        console.log(err);
+    }
+})
+
+// app.post('/editProfileReader',async(req,res)=>{
+//     const upReaderName=req.body.readerEditName;
+//     const upReaderEmail=req.body.readerEditEmail;
+//       const upReaderPhone=req.body.readerEditPhone;
+//       const upReaderAdd=req.body.readerEditAdd;
+//     if(upReaderName!="" && upReaderEmail=="" && upReaderPhone=="" && upReaderAdd=="" ){
+//         await db.query("update reader set name=$1  where email=$2",
+//         [upReaderName,readerLogedIn]);
+//     }else if(upReaderName=="" && upReaderEmail!="" && upReaderPhone=="" && upReaderAdd=="" ){
+//         await db.query("update staff set email=$1 where email=$2",
+//        [upReaderEmail,readerLogedIn]);
+//            readerLogedIn=upReaderEmail;
+//     }else if(upStaffId=="" && upStaffName=="" && upStaffEmail!=""){
+//         await db.query("update staff set email=$1 where email=$2",
+//         [upStaffEmail,staffLogedIn]);
+//         staffLogedIn=upStaffEmail;
+//     }else if(upStaffId!="" && upStaffName!="" && upStaffEmail!=""){
+//         await db.query("update staff set id=$1,name=$2,email=$3 where email=$4",
+//         [upStaffId,upStaffName,upStaffEmail,staffLogedIn]);
+//         staffLogedIn=upStaffEmail;
+//     }
+//     await viewStaffProfile(res);
+
+// });
+
+
+// Author
+
+app.get('/authorLogin',(req,res)=>{
+    res.render('AuthorLogin.ejs')
+})
+
+app.get('/author-register',(req,res)=>{
+    res.render('authorRegister.ejs');
+})
+
+app.post('/author-Login',async(req,res)=>{
+    const authorEmail=req.body.authorEmail;
+    const authorpwd=req.body.password;
+    try{
+        const data=await db.query("select * from author where email=$1",
+        [authorEmail]);
+         authorLoggedIn=authorEmail;
+        if(data.rows!=""){
+            const decryptedPassword = cryptr.decrypt(data.rows[0].password);
+             if(decryptedPassword==authorpwd){
+                await loadingAuthorMainPage(res);
+             }else{
+                res.render('AuthorLogin.ejs',{
+                    pwdError:"Incorrect password"
+                });
+             }
+
+        }else{
+            res.render('staff-login.ejs',{
+                mailError:"Username is not registered"
+            });
+        }
+    }
+    catch(err){
+        console.log(err);
+    }
+})
+
+
+
+app.post('/returnToAuthorMain',async(req,res)=>{
+    await loadingAuthorMainPage(res);
+})
+
+app.post('/authorViewProfile',async(req,res)=>{
+    try{
+    await viewAuthorProfile(res);    
+    }catch(err){
+        console.log(err)
+    }
+    
+});
+app.post('/deleteAuthor',async(req,res)=>{
+    const idToDeleteAuthor=req.body.deleteAuthor;
+    db.query("delete from author where auth_id=$1",
+    [idToDeleteAuthor]);
+    await displayAuthorInfo(res);
+});
+
 app.post('/searchAuthor',async(req,res)=>{
     const auth_id=req.body.authId;
     const auth_name=req.body.authName;
@@ -515,29 +593,6 @@ app.post('/searchAuthor',async(req,res)=>{
 })
 
 
-app.post('/userRegister',async(req,res)=>{
-   const userName=req.body.userName;
-   const userEmail=req.body.userEmail;
-   const userPhone=req.body.userPhone;
-   const userAddress=req.body.userAddress;
-   const createPwd=req.body.createPassword;
-   const confirmpwd=req.body.confirmPassword;
-   if(createPwd==confirmpwd){
-    const encryptedPassword = cryptr.encrypt(createPwd);
-    try{
-    await db.query(`insert into reader (name,email,phone,address,password) values($1,$2,$3,$4,$5)`,
-    [userName,userEmail,userPhone,userAddress,encryptedPassword]);
-    res.redirect('/userLogin');
-    }catch(err){
-     console.log(err);
-    }
-   }else{
-    res.render('userRegister.ejs',{
-        passwordErr:"Password doesn't match"
-    });
-   }
-});
-
 app.post('/authorRegister',async(req,res)=>{
     const authorName=req.body.authorName;
     const authorEmail=req.body.authorEmail;
@@ -560,16 +615,42 @@ app.post('/authorRegister',async(req,res)=>{
     }
 })
 
-
-
-app.post('/bookInfo',async(req,res)=>{
-    await displayBookInfo(res);
-});
-
 app.post('/authorInfo',async(req,res)=>{
     await displayAuthorInfo(res);
 });
 
+app.post('/insertBookFromAuthor',async(req,res)=>{
+    const bookName=req.body.bookName;
+    const price=req.body.bookPrice;
+    if(bookName!="" && price!=""){
+    try{
+        const author_id=await db.query("select auth_id from author where email=$1",
+        [authorLoggedIn]);
+        console.log(authorLoggedIn)
+        console.log(author_id.rows[0].auth_id)
+        const auth_id_check=await db.query("select * from author where auth_id=$1",
+        [author_id.rows[0].auth_id]);
+        if(auth_id_check.rows!=""){
+            db.query("insert into book (title,price,auth_id) values($1,$2,$3)",
+            [bookName,price,author_id.rows[0].auth_id]);
+        }
+        const dataTrigger=await db.query("select message1 from logs")
+        await db.query("delete from logs");
+        await loadingAuthorMainPageTriggerInfo(res,dataTrigger.rows[0].message1);
+       
+    }catch(err){
+        console.log(err);
+    }
+}
+    await loadingAuthorMainPage(res);
+})
+
+
+// book
+
+app.post('/bookInfo',async(req,res)=>{
+    await displayBookInfo(res);
+});
 
 
 app.post('/insertBook',(req,res)=>{
@@ -599,32 +680,6 @@ app.post('/insertNewBook',async(req,res)=>{
    
 
     
-})
-
-app.post('/insertBookFromAuthor',async(req,res)=>{
-    const bookName=req.body.bookName;
-    const price=req.body.bookPrice;
-    if(bookName!="" && price!=""){
-    try{
-        const author_id=await db.query("select auth_id from author where email=$1",
-        [authorLoggedIn]);
-        console.log(authorLoggedIn)
-        console.log(author_id.rows[0].auth_id)
-        const auth_id_check=await db.query("select * from author where auth_id=$1",
-        [author_id.rows[0].auth_id]);
-        if(auth_id_check.rows!=""){
-            db.query("insert into book (title,price,auth_id) values($1,$2,$3)",
-            [bookName,price,author_id.rows[0].auth_id]);
-        }
-        const dataTrigger=await db.query("select message1 from logs")
-        await db.query("delete from logs");
-        await loadingAuthorMainPageTriggerInfo(res,dataTrigger.rows[0].message1);
-       
-    }catch(err){
-        console.log(err);
-    }
-}
-    await loadingAuthorMainPage(res);
 })
 
 app.post('/deleteBook',async(req,res)=>{
@@ -710,60 +765,65 @@ app.post('/updateBook',async(req,res)=>{
     }
 })
 
-app.post("/ReaderLogin",async(req,res)=>{
-    const loginEmail=req.body.userEmail;
-    const loginpwd=req.body.password;
-    try{
-        const data=await db.query("select * from reader where email=$1",
-        [loginEmail]);
-        readerLoggedIn=loginEmail;
-        if(data.rows!=""){
-            const decryptedPassword = cryptr.decrypt(data.rows[0].password);
-             if(decryptedPassword==loginpwd){
-               await loadingUserMainPage(res)
-             }else{
-                res.render('userLogin.ejs',{
-                    pwdError:"Incorrect password"
-                });
-             }
 
-        }else{
-            res.render('userLogin.ejs',{
-                mailError:"Username is not registered"
-            });
-        }
-    }
-    catch(err){
-        console.log(err);
-    }
-})
-app.post('/requestBook',async(req,res)=>{
-     const requestedBookId=req.body.requestBook;
-     try{
-     const data=await db.query("select title from book where book_id=$1",
-     [requestedBookId]);
-     const userData=await db.query("select * from reader where email=$1",
-     [readerLoggedIn]);
-     await db.query("insert into booksToBeIssued (book_id,user_id,book_title,reader_name) values ($1,$2,$3,$4)",
-     [requestedBookId,userData.rows[0].user_id,data.rows[0].title,userData.rows[0].name])
-     await loadingUserMainPage(res)
-     }catch(err){
-        console.log(err)
-     }
+// report
 
-
+app.post('/reportInfo',async(req,res)=>{
+    await displayReportInfo(res);
 })
 
-app.post('/returnBook',async(req,res)=>{
-    const bookId=req.body.returntBook;
-    try{
-    await db.query("delete from issuedBooks where book_id=$1",
-    [bookId]);
-    await loadingUserMainPage(res);
-    }catch(err){
-        console.log(err);
-    }
+app.post('/deleteReport',async(req,res)=>{
+ const idToDeleteReport=req.body.deleteReport;
+ db.query("delete from report where reg_no=$1",
+ [idToDeleteReport]);
+ await displayReportInfo(res);
 })
+
+app.post('/searchReport',async(req,res)=>{
+ const regno=req.body.reg_no;
+ const book_name=req.body.bookName;
+ const reader_name=req.body.readName;
+  try{
+ if(regno!="" && book_name=="" && reader_name==""){
+    const dataUsingregno= await db.query("select * from report where reg_no=$1",
+    [regno]);
+    res.render('reportInfo.ejs',{
+     repData:dataUsingregno.rows
+    })
+ }else if(regno=="" && book_name!="" && reader_name==""){
+    const dataUsingBookName= await db.query("select * from report where book_title=$1",
+    [book_name]);
+    res.render('reportInfo.ejs',{
+     repData:dataUsingBookName.rows
+    })
+ }else if(regno=="" && book_name=="" && reader_name!=""){
+    const dataUsingreadName= await db.query("select * from report where reader_name=$1",
+    [reader_name]);
+    res.render('reportInfo.ejs',{
+     repData:dataUsingreadName.rows
+    })
+ }else if(regno=="" && book_name!="" && reader_name!=""){
+     const dataUsingreadNameAndbookName= await db.query("select * from report where reader_name=$1 and book_title=$2",
+     [reader_name,book_name]);
+     res.render('reportInfo.ejs',{
+      repData:dataUsingreadNameAndbookName.rows
+     })
+ }else if(regno!="" && book_name!="" && reader_name!=""){
+     const dataUsingregno= await db.query("select * from report where reg_no=$1",
+     [regno]);
+     res.render('reportInfo.ejs',{
+      repData:dataUsingregno.rows
+     })
+ }
+}catch(err){
+ console.log(err);
+ res.render('bookInfo.ejs',{
+     bookData:""
+ });
+}
+})
+
+// issue-book
 
 app.post('/toBeIssued',async(req,res)=>{
     await loadBooksToBeIssuedPage(res);
@@ -790,61 +850,6 @@ app.post('/issueBook',async(req,res)=>{
         console.log(err);
     }
     await loadBooksToBeIssuedPage(res);
-})
-
-app.post('/reportInfo',async(req,res)=>{
-       await displayReportInfo(res);
-})
-
-app.post('/deleteReport',async(req,res)=>{
-    const idToDeleteReport=req.body.deleteReport;
-    db.query("delete from report where reg_no=$1",
-    [idToDeleteReport]);
-    await displayReportInfo(res);
-})
-
-app.post('/searchReport',async(req,res)=>{
-    const regno=req.body.reg_no;
-    const book_name=req.body.bookName;
-    const reader_name=req.body.readName;
-     try{
-    if(regno!="" && book_name=="" && reader_name==""){
-       const dataUsingregno= await db.query("select * from report where reg_no=$1",
-       [regno]);
-       res.render('reportInfo.ejs',{
-        repData:dataUsingregno.rows
-       })
-    }else if(regno=="" && book_name!="" && reader_name==""){
-       const dataUsingBookName= await db.query("select * from report where book_title=$1",
-       [book_name]);
-       res.render('reportInfo.ejs',{
-        repData:dataUsingBookName.rows
-       })
-    }else if(regno=="" && book_name=="" && reader_name!=""){
-       const dataUsingreadName= await db.query("select * from report where reader_name=$1",
-       [reader_name]);
-       res.render('reportInfo.ejs',{
-        repData:dataUsingreadName.rows
-       })
-    }else if(regno=="" && book_name!="" && reader_name!=""){
-        const dataUsingreadNameAndbookName= await db.query("select * from report where reader_name=$1 and book_title=$2",
-        [reader_name,book_name]);
-        res.render('reportInfo.ejs',{
-         repData:dataUsingreadNameAndbookName.rows
-        })
-    }else if(regno!="" && book_name!="" && reader_name!=""){
-        const dataUsingregno= await db.query("select * from report where reg_no=$1",
-        [regno]);
-        res.render('reportInfo.ejs',{
-         repData:dataUsingregno.rows
-        })
-    }
-}catch(err){
-    console.log(err);
-    res.render('bookInfo.ejs',{
-        bookData:""
-    });
-}
 })
 
 
